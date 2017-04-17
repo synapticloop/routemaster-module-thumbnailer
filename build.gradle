@@ -1,0 +1,114 @@
+plugins {
+	id 'java'
+	id 'eclipse'
+	id "maven"
+	id "maven-publish"
+
+	id "com.jfrog.bintray" version "1.7.3"
+
+	id "com.github.ben-manes.versions" version "0.13.0"
+	id 'net.saliman.cobertura' version '2.2.6'
+	id 'co.riiid.gradle' version '0.4.2'
+
+	id "com.github.johnrengelman.shadow" version "1.2.4"
+
+	id "synapticloop.copyrightr" version "1.1.2"
+	id "synapticloop.documentr" version "2.9.0"
+}
+
+version = '1.0.0'
+
+//
+// ensure that you change the following values
+//
+group = 'synapticloop'
+archivesBaseName = 'routemaster-module-thumbnailer'
+description = """Generate thumbnails for images"""
+
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+	jcenter()
+
+	maven {
+		url  "http://dl.bintray.com/synapticloop/maven" 
+	}
+}
+
+//
+// We create a configuration here which is used to run the shadow jar
+//
+
+configurations {
+	shadow
+}
+
+//
+// ensure that the dependencies are up-to-date, you can do this by running
+//
+//    gradle dependencyUpdates
+//
+// or as a shortcut (provided there are no clashes)
+//
+//    gradle dU
+//
+// this functionality is provided by the plugin:
+//    id "com.github.ben-manes.versions" version "0.13.0"
+//
+
+dependencies {
+	runtime 'synapticloop:routemaster:2.2.1'
+	runtime 'org.imgscalr:imgscalr-lib:4.2'
+
+	compile 'synapticloop:routemaster:2.2.1'
+	compile 'org.imgscalr:imgscalr-lib:4.2'
+
+	testRuntime 'junit:junit:4.12'
+	testRuntime 'org.mockito:mockito-all:1.10.19'
+
+	testCompile 'junit:junit:4.12'
+	testCompile 'org.mockito:mockito-all:1.10.19'
+
+	shadow 'org.imgscalr:imgscalr-lib:4.2'
+}
+
+// the following is the shadow jar plugin configuration which ultimately collects
+// all of the dependencies together and puts them into the same jar file for
+// deployment
+
+shadowJar {
+	classifier = ''
+	configurations = [project.configurations.shadow]
+}
+
+//
+// This will upload the file to github releases section and can be accomplished 
+// by running 
+//
+//    gradle githubRelease
+//
+// or as a shortcut (provided there are no clashes)
+//
+//    gradle gR
+//
+// you __MUST__ provide the following environment key:
+//    - GITHUB_TOKEN
+//
+
+github {
+	owner = group
+	repo = archivesBaseName
+	if(System.getenv('GITHUB_TOKEN')) {
+		token = System.getenv('GITHUB_TOKEN')
+	}
+	tagName = version
+	name = version
+	assets = [
+		'build/libs/' + archivesBaseName + '-' + version + '.jar',
+	]
+}
+
+build.finalizedBy('shadowJar')

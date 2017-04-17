@@ -1,0 +1,102 @@
+{
+  "dotGitignore": {
+    "header": {},
+    "additionalEntries": {"entries": ""},
+    "filesToIgnore": {"tags": [
+      {
+        "name": "eclipse",
+        "value": "eclipse"
+      },
+      {
+        "name": "gradle",
+        "value": "gradle"
+      },
+      {
+        "name": "java",
+        "value": "java"
+      }
+    ]}
+  },
+  "buildDotGradle": {
+    "jvm": {
+      "targetCompatibility": {
+        "name": "java8",
+        "value": "1.8"
+      },
+      "sourceCompatibility": {
+        "name": "java8",
+        "value": "1.8"
+      }
+    },
+    "javadoc": {"jvm": {
+      "name": "java8",
+      "value": "8"
+    }},
+    "copyrightr": {
+      "onlyReplaceFirst": false,
+      "dryRun": false,
+      "yearSeparator": " - ",
+      "copyrightHolder": ""
+    },
+    "plugins": {"plugins": [
+      {
+        "name": "java",
+        "value": "id 'java'"
+      },
+      {
+        "name": "eclipse",
+        "value": "id 'eclipse'"
+      },
+      {
+        "name": "copyrightr",
+        "value": "id 'synapticloop.copyrightr' version '1.0.1'"
+      },
+      {
+        "name": "documentr",
+        "value": "id 'synapticloop.documentr' version '2.0.0'"
+      }
+    ]},
+    "header": {},
+    "information": {
+      "archivesBaseName": "",
+      "description": "",
+      "version": "0.0.1",
+      "group": ""
+    },
+    "documentr": {
+      "extension": {
+        "name": "MarkDown",
+        "value": "md"
+      },
+      "directory": ".",
+      "verbose": false
+    },
+    "dependencies": {
+      "compileDependencies": [],
+      "repositories": [
+        {
+          "name": "maven local",
+          "value": "mavenLocal()"
+        },
+        {
+          "name": "maven central",
+          "value": "mavenCentral()"
+        },
+        {
+          "name": "jcenter",
+          "value": "jcenter()"
+        }
+      ],
+      "testDependencies": [
+        {
+          "name": "junit",
+          "value": "'junit:junit:4.12'"
+        },
+        {
+          "name": "mockito",
+          "value": "'org.mockito:mockito-all:1.10.19'"
+        }
+      ]
+    }
+  }
+}
